@@ -49,7 +49,7 @@ LCS_DT <- mxRun(LCSMx)
 
 
 
-## Estimation of State-Space Model in Continuoust Time (SSM-CT) with OpenMx -----------
+## Estimation of State-Space Model in Continuous Time (SSM-CT) with OpenMx -----------
 # Adapted from:
 # Hunter (2018). State Space Modeling in an Open Source, Modular, SEM Environment.
 # Structural Equation Modeling: A Multidisciplinary Journal, 25(2), 307–324.
@@ -67,9 +67,12 @@ dataL <- lapply(cases, data2List, dwork = dEmp)
 
 modNames_ct <- paste0("i", cases, "ODE")
 
-## Specify invariant part of the OpenMx objects
+## Specify invariant part of the OpenMx objects ##
+## See equations 8 and 9 in Hunter (2018) for more details on
+## the meaning of each matrix in the SSM model.
 opmxL <- list()
 
+# Autoregressive dynamics
 opmxL$amat_ct <- mxMatrix(name = "A", "Full", 2, 2, free = c(T,F,F,F),
                           values = c(-.2,0,1,0),
                           dimnames = list( c("yIn", "ySl"), c("yIn", "ySl") ),
@@ -77,31 +80,36 @@ opmxL$amat_ct <- mxMatrix(name = "A", "Full", 2, 2, free = c(T,F,F,F),
                           lbound = c(-1, NA,NA,NA),
                           ubound = c(0, NA,NA,NA))
 
-opmxL$bmat <- mxMatrix(name = "B", "Zero", 2, 1)
 
+opmxL$bmat <- mxMatrix(name = "B", "Zero", 2, 1) # Input effects on the latent variables
+
+# Factor loadings in the measurement model
 opmxL$cmat <- mxMatrix(name = "C", "Full", 1, 2, free = FALSE,
                        values = c(1,0), 
                        dimnames = list( c("y"), c("yIn", "ySl") ),
                        labels = c(NA, NA)  )
 
-opmxL$dmat <- mxMatrix("Zero", 1, 1, name = "D")
+opmxL$dmat <- mxMatrix("Zero", 1, 1, name = "D") # Input effects on the observed variables
 
-opmxL$qmat <- mxMatrix("Zero", 2, 2, name = "Q")
+opmxL$qmat <- mxMatrix("Zero", 2, 2, name = "Q") # Dynamic error (i.e., innovations)
 
-opmxL$rmat <- mxMatrix("Diag", 1, 1, TRUE, 2,
+opmxL$rmat <- mxMatrix("Diag", 1, 1, TRUE, 2,    # Measurement error
                        name = "R", labels = "MerY")
 
+# Mean vector of latent variables at t=0
 opmxL$xmat <- mxMatrix(name = "x0", "Full", 2, 1, free = TRUE,
                        values = c(12, 7),
                        labels = c("yInMn", "ySlMn"))
 
+# Covariance matrix of latent variables (time-invariant in this model)
 opmxL$pmat <- mxMatrix(name = "P0", "Symm", 2, 2, TRUE,
                        values = c(25, 3, .7),
                        labels = c("yInV", "yInSlCv", "ySlV"),
                        lbound = c(0, NA, 0))
 
-opmxL$umat <- mxMatrix("Zero", 1, 1, name = "u")
+opmxL$umat <- mxMatrix("Zero", 1, 1, name = "u") # Covariates
 
+# Specification of the time metrics
 opmxL$tmat <- mxMatrix('Full', 1, 1, name='time', labels='data.age')
 
 opmxL$modL_ct <- with(opmxL, list(amat_ct, bmat, cmat, dmat,
