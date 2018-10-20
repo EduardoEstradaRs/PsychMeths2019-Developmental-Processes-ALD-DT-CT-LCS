@@ -68,8 +68,9 @@ dataL <- lapply(cases, data2List, dwork = dEmp)
 modNames_ct <- paste0("i", cases, "ODE")
 
 ## Specify invariant part of the OpenMx objects ##
-## See equations 8 and 9 in Hunter (2018) for more details on
-## the meaning of each matrix in the SSM model.
+## For more details on the meaning of each matrix in the SSM model,
+## see Equations 4 and 5 in the main paper, and Equations 8 and 9 in Hunter (2018).
+
 opmxL <- list()
 
 # Autoregressive dynamics
@@ -101,7 +102,7 @@ opmxL$xmat <- mxMatrix(name = "x0", "Full", 2, 1, free = TRUE,
                        values = c(12, 7),
                        labels = c("yInMn", "ySlMn"))
 
-# Covariance matrix of latent variables (time-invariant in this model)
+# Covariance matrix of latent variables at t=0
 opmxL$pmat <- mxMatrix(name = "P0", "Symm", 2, 2, TRUE,
                        values = c(25, 3, .7),
                        labels = c("yInV", "yInSlCv", "ySlV"),
@@ -109,7 +110,7 @@ opmxL$pmat <- mxMatrix(name = "P0", "Symm", 2, 2, TRUE,
 
 opmxL$umat <- mxMatrix("Zero", 1, 1, name = "u") # Covariates
 
-# Specification of the time metrics
+# Specification of the time index
 opmxL$tmat <- mxMatrix('Full', 1, 1, name='time', labels='data.age')
 
 opmxL$modL_ct <- with(opmxL, list(amat_ct, bmat, cmat, dmat,
