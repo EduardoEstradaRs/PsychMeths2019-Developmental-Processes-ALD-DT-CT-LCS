@@ -1,7 +1,7 @@
 # R code for the statistical models used in
 
-# Estrada & Ferrer (2018). Discrete- and Continuous-Time Latent Change Score Modeling of
-# Developmental Processes in Accelerated Cohort-Sequential Designs.
+# Estrada & Ferrer (2018). Studying Developmental Processes in Accelerated
+# Cohort-Sequential Designs with Discrete- and Continuous-Time Latent Change Score Models.
 # Submitted for publication in Psychological Methods (2018)
 
 library(OpenMx)
