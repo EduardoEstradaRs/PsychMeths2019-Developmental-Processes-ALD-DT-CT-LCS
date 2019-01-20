@@ -1,2 +1,4 @@
-# DT-CT-LCS-Modeling-of-Developmental-Processes-in-ALDs
-Code for the statistical models used in the manuscript "Studying Developmental Processes in Accelerated Cohort-Sequential Designs with Discrete- and Continuous-Time Latent Change Score Models"
+# Developmental Processes in ALDs with DT and CT LCS models
+Code for the statistical models used in the manuscript
+
+Estrada, E., & Ferrer, E. (2019). Studying Developmental Processes in Accelerated Cohort-Sequential Designs with Discrete- and Continuous-Time Latent Change Score Models. Psychological Methods (under Review).
