@@ -1,8 +1,8 @@
 # R code for the statistical models used in
 
-# Estrada & Ferrer (2018). Studying Developmental Processes in Accelerated
+# Estrada & Ferrer (2019, in press). Studying Developmental Processes in Accelerated
 # Cohort-Sequential Designs with Discrete- and Continuous-Time Latent Change Score Models.
-# Submitted for publication in Psychological Methods (2018)
+# Psychological Methods, 24.
 
 library(OpenMx)
 
@@ -141,8 +141,6 @@ multiSubjODE <- mxModel(name = "MultiODE_CT", indivmodels_ct,
 SSM_CT <- mxRun(multiSubjODE)  
 
 #summary(SSM_CT)
-
-
 
 
 
