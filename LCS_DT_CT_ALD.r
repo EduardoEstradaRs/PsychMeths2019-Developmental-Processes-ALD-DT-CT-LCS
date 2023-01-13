@@ -5,7 +5,6 @@
 # Psychological Methods, 24.
 
 library(OpenMx)
-# # # #
 
 # dEmp is a data frame containing an empirical data set in wide format
 # It includes repeated observations of the process y
